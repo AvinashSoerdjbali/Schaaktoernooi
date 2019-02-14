@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+
+</script>
+
+<button id="tabelschakers" > Toon Alle Schakers</button>
+<div id="felix"></div>
+</body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+
+    $(document).on('click','#tabelschakers', function(){
+
+      $.ajax({
+      type:"get",
+      url:"/geefalleschakers",
+      success: function(result){
+       console.log(result);
+       ophaalfunctie(result);
+      }
+     });
+    });
+       function ophaalfunctie(antwoordserverschaken){
+        var ant = "";
+        for(var q = 0; q < antwoordserverschaken.length; q++){
+            ant += antwoordserverschaken[q].voornaam + " = = "+  antwoordserverschaken[q].achternaam + "<br>" ;
+        }
+        $('#felix').html(ant);
+      }
+</script>
