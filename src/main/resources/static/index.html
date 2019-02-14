@@ -2,22 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Schaken is FUN</title>
 </head>
 <body>
 <script>
 
 </script>
 
-<button id="tabelschakers" > Toon Alle Schakers</button>
+<button id="tabelschakers"> Toon Alle Schakers</button>
 <div id="felix"></div>
+
+<input type="text" id="voornaam">
+<input type="text" id="tussenvoegsel">
+<input type="text" id="achternaam">
+
+<input type="button" onclick= "viapostversturen()" value=" voeg schaker toe ">
 </body>
 </html>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
 
-    $(document).on('click','#tabelschakers', function(){
+    function viapostversturen(){
+        var dto = {};
+        dto.voornaam = $('#voornaam').val();
+        dto.tussenvoegsel = $('#tussenvoegsel').val();
+        dto.achternaam = $('#achternaam').val();
+        dto = JSON.stringify(dto);
+        $.ajax({
+                type: "post",
+                url: "/toevoegen",
+                data: dto,
+                contentType : "application/json",
+                success: function(result){
+                    console.log('gelukt');
+                }
+        });
 
+    }
+
+    $(document).on('click','#tabelschakers', function(){
       $.ajax({
       type:"get",
       url:"/geefalleschakers",
@@ -30,8 +53,9 @@
        function ophaalfunctie(antwoordserverschaken){
         var ant = "";
         for(var q = 0; q < antwoordserverschaken.length; q++){
-            ant += antwoordserverschaken[q].voornaam + " = = "+  antwoordserverschaken[q].achternaam + "<br>" ;
+            ant += antwoordserverschaken[q].voornaam + " "+ antwoordserverschaken[q].tussenvoegsel + " " + antwoordserverschaken[q].achternaam + "<br>" ;
         }
         $('#felix').html(ant);
       }
+
 </script>
